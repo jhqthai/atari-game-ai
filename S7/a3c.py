@@ -24,7 +24,7 @@ from model import ActorCritic
 parser = argparse.ArgumentParser(description='Asynchronous Actor Critic')
 parser.add_argument('--savedir', default='/tmp', type=str, metavar='PATH',
                     help='Dir name in which we save checkpoints')
-parser.add_argument('--resume', dest='resume', action='store_true',
+parser.add_argument('--resume', dest='resume', type=str,
                     help="If checkpoint available, resume from latest")
 parser.add_argument('--no-resume', dest='resume', action='store_false')
 parser.set_defaults(resume=True)
@@ -285,6 +285,16 @@ def test(shared_model, render=0):
         state, reward, done, _ = env.step(action[0, 0])
         if render:
             env.render()
+            
+        """    
+        TEST-DEMO-ONLY
+        state_im = state.numpy()
+        state_im.transpose()
+        scipy.misc.imageio.saveim(state_im, filename-with-time-step-number)
+        #ffmpeg 
+        END-WORKZONE
+        """
+        
         done = done or episode_length >= 10000
         reward_sum += reward
 
