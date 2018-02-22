@@ -16,6 +16,7 @@ import torch.nn.functional as F
 import torch.multiprocessing as mp
 import argparse
 import shutil
+#from scr..... import imsave
 from utils import FloatTensor, get_elapsed_time_str, SharedAdam
 from envs import create_atari_env
 from model import ActorCritic
@@ -251,7 +252,8 @@ def save_checkpoint(state, is_best, filename):
 def test(shared_model, render=0):
     env = create_atari_env(args.rom)
     if render == 1:
-        env.render()
+        img = env.render()
+        imsave(PATH, img)
 
     model = ActorCritic(env.observation_space.shape[0], env.action_space)
 
