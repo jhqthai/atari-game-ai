@@ -16,7 +16,7 @@ import torch.nn.functional as F
 import torch.multiprocessing as mp
 import argparse
 import shutil
-#from scr..... import imsave
+from scipy.misc import imsave
 from utils import FloatTensor, get_elapsed_time_str, SharedAdam
 from envs import create_atari_env
 from model import ActorCritic
@@ -252,8 +252,7 @@ def save_checkpoint(state, is_best, filename):
 def test(shared_model, render=0):
     env = create_atari_env(args.rom)
     if render == 1:
-        img = env.render()
-        imsave(PATH, img)
+        env.render()
 
     model = ActorCritic(env.observation_space.shape[0], env.action_space)
 
@@ -286,8 +285,11 @@ def test(shared_model, render=0):
 
         state, reward, done, _ = env.step(action[0, 0])
         if render:
-            env.render()
-            
+            #env.render()
+            # Spits out images in the selected path
+            img = env.render('rgb_array')
+            imsave('/opt/tmp/img/pac-20000/frame_{:06d}.png'.format(episode_length), img)
+      
         """    
         TEST-DEMO-ONLY
         state_im = state.numpy()
@@ -360,7 +362,7 @@ if __name__ == '__main__':
     processes.append(p)
 	
 	# This loop start the processes
-    for rank in range(0, 3): # This loop how many agent we shall run simultaneously
+    for rank in range(0, 1): # This loop how many agent we shall run simultaneously
         print("Starting {}".format(rank))
         p = mp.Process(target=train, args=(rank, shared_model, optimizer))
         p.start() # Start point

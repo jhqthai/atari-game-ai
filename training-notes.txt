@@ -1,0 +1,11 @@
+Multiple workers randomise the process in different direction, but in the end converged to stablise.
+There are multiple reasons why the worker are performing worst the more we train it. This requires investigation.
+One of the reason could be that the learning rate is too high and the model is skipping the optimal "learning point".
+
+For the first 100 episodes, the workers was not able to move in different direction, they were repeating the same mistake, while trying to figure out what possible actions they can take.
+
+For the thousand episodes, the workers has explored all of the possible movements, it seem like they are currently trying to understand the game by exploring random actions.
+
+The the ten-thousands episodes, the workers has figured out how to move to achieve higher rewards. But when a new variable comes into the game the workers does not know what to do.
+
+For the twenty-thousand episodes, the workers started to become worst and unable to move properly. Seem like it does not know what to do anymore and acted similar to itself in infant stage.

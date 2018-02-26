@@ -35,7 +35,7 @@ class AtariRescale42x42(gym.ObservationWrapper):
         self.observation_space = Box(0.0, 1.0, [1, 42, 42])
 
     def _observation(self, observation):
-        self.render()# Testing
+        #self.render()# Testing
         return _process_frame42(observation)
 
 
